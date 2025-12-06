@@ -1,0 +1,25 @@
+1. nest install new backed = npx @nestjs/cli new backed
+
+2. cd backed
+
+    //redis
+    3. npm install axios ioredis @nestjs/schedule @nestjs/typeorm typeorm pg
+    // axios : HTTP client for binance
+    // ioredis : Redis client
+    // @nestjs/schedule : For scheduling tasks
+    // @nestjs/typeorm, typeorm, pg : For database interaction with PostgreSQL
+    // pg : PostgreSQL driver
+
+    4. nest generate service price
+
+5.cd ..
+
+6. npx @nestjs/cli new worker
+
+7. cd worker
+
+    //redis
+    8. npm install axios ioredis @nestjs/schedule
+
+    9.
+extra info : Remove-Item -Recurse -Force .git (for windows powershell)

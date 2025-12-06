@@ -1,0 +1,50 @@
+services:
+  backend:
+    build: ./backend
+    container_name: crypto-backend
+    ports:
+      - "3000:3000"
+    networks:
+      - appNet
+    depends_on:
+      - postgres
+      - redis
+  
+  worker:
+    build: ./worker
+    container_name: crypto-worker
+    networks:
+      - appNet
+    depends_on:
+      - postgres
+      - redis
+    
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_postgres: crypto_tracker
+    ports:
+      - "5432:5432"
+    networks:
+      - appNet
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - appNet
+    
+volumes:
+  redis-data:
+  postgres-data:
+  
+networks:
+  appNet:
+    driver: bridge
