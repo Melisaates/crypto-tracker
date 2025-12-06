@@ -23,5 +23,5 @@
     //redis
     8. npm install axios ioredis @nestjs/schedule
 
-    9.nest generate service price
+    9.nest generate service price / nest g res price(it is coming with controller,service,module)
 extra info : Remove-Item -Recurse -Force .git (for windows powershell)
