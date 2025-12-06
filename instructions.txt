@@ -1,3 +1,5 @@
+// Just run these commands in terminal to setup the project
+
 1. nest install new backed = npx @nestjs/cli new backed
 
 2. cd backed
@@ -21,5 +23,5 @@
     //redis
     8. npm install axios ioredis @nestjs/schedule
 
-    9.
+    9.nest generate service price
 extra info : Remove-Item -Recurse -Force .git (for windows powershell)
