@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { PriceService } from './price.service';
 import { CreatePriceDto } from './dto/create-price.dto';
 import { UpdatePriceDto } from './dto/update-price.dto';
@@ -8,9 +8,14 @@ export class PriceController {
   constructor(private readonly priceService: PriceService) {}
 
   @Get()
-  async getPrices(@Param('symbol') symbol: string) {
-    const sym = symbol.toUpperCase();
-    return this.priceService.getPrice(sym as 'BTCUSDT');
+  async getPrice(@Query('symbol') symbol: string) {
+    if (!symbol) {
+      throw new Error('Query param "symbol" is required');
+    }
+
+    symbol = symbol.toUpperCase();
+
+    return this.priceService.getPrice(symbol as 'BTCUSDT');
   }
 
   // @Get()
