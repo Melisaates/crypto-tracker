@@ -10,7 +10,7 @@ export class PriceLog {
     @Column()
     symbol: string;
 
-    @Column('decimal',({ precision: 18, scale: 8 }))   
+    @Column('decimal', { precision: 18, scale: 8 })   
     price: string;
 
     @Column({ default: 'Binance' })

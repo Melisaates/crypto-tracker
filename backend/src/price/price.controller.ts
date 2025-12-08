@@ -10,7 +10,7 @@ export class PriceController {
   @Get()
   async getPrices(@Param('symbol') symbol: string) {
     const sym = symbol.toUpperCase();
-    return this.priceService.getPrice(sym);
+    return this.priceService.getPrice(sym as 'BTCUSDT');
   }
 
   // @Get()

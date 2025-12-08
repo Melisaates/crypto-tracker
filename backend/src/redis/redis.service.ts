@@ -1,32 +1,56 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRediDto } from './dto/create-redi.dto';
-import { UpdateRediDto } from './dto/update-redi.dto';
+import { error } from 'console';
+import Redis from 'ioredis';
 
 @Injectable()
 export class RedisService {
-  async set(cacheKey: string, arg1: string,  ttl: number) {
-    throw new Error('Method not implemented.');
-  }
-  get(cachekey: string) {
-    throw new Error('Method not implemented.');
-  }
-  create(createRediDto: CreateRediDto) {
-    return 'This action adds a new redi';
+  private client: Redis;
+
+  constructor() {
+
+    const host = process.env.REDIS_HOST || 'localhost';
+    const port = Number(process.env.REDIS_PORT ) || 6379;
+    this.client = new Redis({
+      host: host,
+      port: port,
+    });
   }
 
-  findAll() {
-    return `This action returns all redis`;
+  async set(cacheKey: string, arg1: string, ttl?: number) {
+    if (ttl) 
+      this.client.set(cacheKey, arg1, 'EX', ttl);
+    else
+      this.client.set(cacheKey, arg1);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} redi`;
+
+
+  //get value from redis by key
+  async get(cachekey: string) {
+    try {
+      const data = await this.client.get(cachekey);
+      return data;
+    } catch (err) {
+      console.error('Error getting cache:', err);
+      return null;
+    }
+
   }
 
-  update(id: number, updateRediDto: UpdateRediDto) {
-    return `This action updates a #${id} redi`;
+  //return redis client
+  // Difference between getClient and get is that getClient returns the Redis client instance itself, 
+  // allowing direct interaction with Redis commands, 
+  // while get retrieves the value associated with a specific key from the Redis store.
+  //for example, getClient return this.client, so we can use this.client.set(), this.client.get() etc. 
+  // , get method only return value of a specific key.
+  getClient() {
+    return this.client;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} redi`;
+  async onModuleDestroy() {
+    await this.client.quit();
   }
+
+
+
 }

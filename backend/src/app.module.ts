@@ -4,10 +4,7 @@ import { PriceModule } from './price/price.module';
 import { PriceLog } from './price/price.entity';
 import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
-import { PriceModule } from './price/price.module';
 import { PriceService } from './price/price.service';
-import { RedisModule } from './redis/redis.module';
-import { PriceModule } from './price/price.module';
 
 
 @Module({
