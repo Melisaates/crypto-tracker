@@ -26,6 +26,7 @@ Worker: Cache Updater
     8. npm install axios ioredis @nestjs/schedule
 
     9.nest generate service price / nest g res price(it is coming with controller,service,module)
+
 extra info : Remove-Item -Recurse -Force .git (for windows powershell)
 10. npm install @nestjs/typeorm typeorm
 11. npm install @nestjs/config
@@ -44,3 +45,20 @@ saving to 'ping'
 ping                 100% |******************************************************************************************************|     2  0:00:00 ETA
 'ping' saved
 /app # 
+
+
+
+12. Invoke-RestMethod "http://localhost:3000/price?symbol=ETHUSDT"
+
+13.docker compose build --no-cache
+
+14.npm install -g yarn
+
+cd ../frontend
+15. npm create vite@latest frontend -- --template react
+// web socket client and charting library
+15. npm install socket.io-client chart.js react-chartjs-2
+16. yarn
+17. yarn add socket.io-client chart.js react-chartjs-2
+
+
