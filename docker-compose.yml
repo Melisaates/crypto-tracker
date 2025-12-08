@@ -18,14 +18,14 @@ services:
     depends_on:
       - postgres
       - redis
-    
-
+      
   postgres:
+    container_name: crypto-postgres
     image: postgres:13
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_postgres: crypto_tracker
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cryptodb
     ports:
       - "5432:5432"
     networks:
@@ -33,6 +33,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
   redis:
+    container_name: crypto-redis
     image: redis:alpine
     ports:
       - "6379:6379"

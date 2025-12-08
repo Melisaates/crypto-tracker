@@ -71,7 +71,10 @@ export class PriceService {
   //
   binancePriceEndpoint(symbol: string) {
     //construct the Binance API endpoint URL for fetching the price of the given symbol
-    return `${process.env.BINANCE_API_BASE_URL}/api/v3/ticker/price?symbol=${symbol}`;
+    const base = process.env.BINANCE_API_BASE!.replace(/\/+$/, '');
+    const url = `${base}/api/v3/ticker/price?symbol=${symbol}`;
+
+    return url;
   }
 
 

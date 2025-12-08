@@ -2,8 +2,6 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeor
 
 
 @Entity()
-
-
 export class PriceLog {
     @PrimaryGeneratedColumn()
     id: number;

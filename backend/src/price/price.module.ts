@@ -3,12 +3,12 @@ import { PriceService } from './price.service';
 import { PriceController } from './price.controller';
 import { TypeORMError } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Redi } from 'src/redis/entities/redi.entity';
 import { RedisModule } from 'src/redis/redis.module';
 import { PriceLog } from './entities/price.entity';
+import { RedisService } from 'src/redis/redis.service';
 
 @Module({
-  imports: [ TypeOrmModule.forFeature([PriceLog]),RedisModule ],
+  imports: [ TypeOrmModule.forFeature([PriceLog]), RedisModule ],
   controllers: [PriceController],
   //provides the PriceService
   providers: [PriceService],

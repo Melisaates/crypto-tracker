@@ -3,8 +3,8 @@ import { ScheduleModule } from "@nestjs/schedule";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { WorkerService } from "./worker.service";
-import { RedisService } from "../../backend/src/redis/redis.service";
-import { PriceLog } from "../../backend/src/price/entities/price.entity";
+import { RedisService } from "./redis.service";
+import { PriceLog } from "./price.entity";
 
 
 
@@ -17,11 +17,11 @@ import { PriceLog } from "../../backend/src/price/entities/price.entity";
     TypeOrmModule.forFeature([PriceLog]),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DATABASE_HOST || 'localhost',
-        port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
-        username: process.env.DATABASE_USER || 'postgres',
-        password: process.env.DATABASE_PASSWORD || 'password',
-        database: process.env.DATABASE_NAME || 'cryptodb',
+      host: process.env.DB_HOST || 'localhost',
+        port: parseInt(process.env.DB_PORT, 10) || 5432,
+        username: process.env.DB_USER || 'postgres',
+        password: process.env.DB_PASSWORD || 'postgres',
+        database: process.env.DB_NAME || 'cryptodb',
         entities: [PriceLog],
         synchronize: true,
     })

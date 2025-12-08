@@ -1,3 +1,5 @@
+Backend: Cache First
+Worker: Cache Updater
 // Just run these commands in terminal to setup the project
 
 1. nest install new backed = npx @nestjs/cli new backed
@@ -33,3 +35,12 @@ extra info : Remove-Item -Recurse -Force .git (for windows powershell)
 ****Redis Cache: A mechanism that stores data temporarily in memory for fast access.
 
 ****Redis TTL: A setting that makes the stored data automatically expire after a given time.
+
+extra
+// Testing connectivity to Binance API
+/app # wget https://api.binance.com/api/v3/ping
+Connecting to api.binance.com (108.157.46.128:443)
+saving to 'ping'
+ping                 100% |******************************************************************************************************|     2  0:00:00 ETA
+'ping' saved
+/app # 

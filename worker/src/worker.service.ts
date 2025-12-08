@@ -1,8 +1,8 @@
 import { Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { PriceLog } from "../../backend/src/price/entities/price.entity";
+import { PriceLog } from "./price.entity";
 import { Repository } from "typeorm";
-import { RedisService } from "../../backend/src/redis/redis.service";
+import { RedisService } from "./redis.service";
 import axios from "axios";
 import { Cron } from "@nestjs/schedule";
 
@@ -27,7 +27,9 @@ export class WorkerService {
         // Here you would implement the logic to fetch the price from an external API
         // For demonstration, we'll just log the action     
         try {
-            const url = `${process.env.BINANCE_API_BASE_URL}/api/v3/ticker/price?symbol=${symbol}`;
+            const base = process.env.BINANCE_API_BASE!.replace(/\/+$/, '');
+            const url = `${base}/api/v3/ticker/price?symbol=${symbol}`;
+
             const res = await axios.get(url);
             const {price} = res.data;
 

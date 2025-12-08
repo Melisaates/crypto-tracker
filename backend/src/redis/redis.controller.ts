@@ -7,28 +7,28 @@ import { UpdateRediDto } from './dto/update-redi.dto';
 export class RedisController {
   constructor(private readonly redisService: RedisService) {}
 
-  @Post()
-  create(@Body() createRediDto: CreateRediDto) {
-    return this.redisService.create(createRediDto);
-  }
+  // @Post()
+  // create(@Body() createRediDto: CreateRediDto) {
+  //   return this.redisService.create(createRediDto);
+  // }
 
-  @Get()
-  findAll() {
-    return this.redisService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.redisService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.redisService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.redisService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRediDto: UpdateRediDto) {
-    return this.redisService.update(+id, updateRediDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateRediDto: UpdateRediDto) {
+  //   return this.redisService.update(+id, updateRediDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.redisService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.redisService.remove(+id);
+  // }
 }
