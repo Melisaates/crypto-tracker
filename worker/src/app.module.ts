@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { WorkerModule } from './worker/worker.module';
+import { WorkerModule } from './worker.module';
 
 @Module({
   imports: [WorkerModule],

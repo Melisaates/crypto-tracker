@@ -25,6 +25,9 @@
 
     9.nest generate service price / nest g res price(it is coming with controller,service,module)
 extra info : Remove-Item -Recurse -Force .git (for windows powershell)
+10. npm install @nestjs/typeorm typeorm
+11. npm install @nestjs/config
+
 
 
 ****Redis Cache: A mechanism that stores data temporarily in memory for fast access.
