@@ -35,9 +35,8 @@ RUN yarn install --production --frozen-lockfile
 
 COPY --from=builder /app/dist ./dist
 
-EXPOSE 5173
-
-CMD ["node", "dist/main.js"]
-
+EXPOSE 4173
+RUN yarn global add vite
+CMD ["vite", "preview", "--host", "0.0.0.0", "--port", "4173"]
 HEALTHCHECK --interval=30s --timeout=10s \
-  CMD wget -q --spider http://localhost:3000/health || exit 1
+  CMD wget -q --spider http://localhost:4173/health || exit 1

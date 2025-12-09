@@ -6,13 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RedisModule } from 'src/redis/redis.module';
 import { PriceLog } from './entities/price.entity';
 import { RedisService } from 'src/redis/redis.service';
+import { PricesGateway } from './prices.gateway';
 
 @Module({
   imports: [ TypeOrmModule.forFeature([PriceLog]), RedisModule ],
   controllers: [PriceController],
   //provides the PriceService
-  providers: [PriceService],
+  providers: [PriceService, PricesGateway],
   //exports the service to be used in other modules
-  exports: [PriceService],
+  exports: [PriceService, PricesGateway],
 })
 export class PriceModule {}

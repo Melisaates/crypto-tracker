@@ -1,45 +1,33 @@
-import { useEffect, useState } from 'react'
-import { Line } from 'react-chartjs-2';
-import './App.css'
-import { socket } from './services/socket'
+import { useEffect, useState } from 'react';
+import { socket } from './services/socket';
+import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
 
-function App() {
-  const [prices, setPrices] = useState<string[]>([])
-  const [labels, setLabels] = useState<string[]>([])
+export default function LiveChart({ symbol }: { symbol: string }) {
+  const [data, setData] = useState<{ time: string; price: number }[]>([]);
 
   useEffect(() => {
-    // Listen for price updates from the server
-    socket.on('priceUpdate', (data: { price: string; timestamp: number }
-    ) => {
-      console.log("received: ",data)
-      setPrices((prevPrices) => [...prevPrices, data.price])
-      setLabels((prevLabels) => [...prevLabels, new Date(data.timestamp).toLocaleTimeString()])
-    })
+    const handler = (update: { symbol: string; price: number }) => {
+      if (update.symbol === symbol) {
+        setData(prev => [
+          ...prev.slice(-20), // sadece son 20 veri
+          { time: new Date().toLocaleTimeString(), price: update.price },
+        ]);
+      }
+    };
 
-  
-  }, [])
+    socket.on('priceUpdate', handler);
 
+    return () => {
+      socket.off('priceUpdate', handler);
+    };
+  }, [symbol]);
 
   return (
-      <div>
-       <h2>Live BTC price</h2>
-       <Line 
-          data = {{
-            labels,
-            datasets:[
-              {
-                label:'BTC-USDT',
-                data:prices,
-                borderColor:'rgba(75,192,192,1)',
-                backgroundColor:'rgba(75,192,192,0.2)',
-              }
-            ]
-          }}
-       />
-
-      </div>
-      
-  )
+    <LineChart width={600} height={300} data={data}>
+      <XAxis dataKey="time" />
+      <YAxis />
+      <Tooltip />
+      <Line type="monotone" dataKey="price" stroke="#8884d8" />
+    </LineChart>
+  );
 }
-
-export default App

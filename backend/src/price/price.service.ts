@@ -13,6 +13,7 @@ export class PriceService {
   //this is used for logging purposes
   //Logger is a built-in NestJS utility for logging messages
   private readonly logger = new Logger(PriceService.name);
+  gateway: any;
 
   //injecting RedisService and PriceLog repository
   //to interact with Redis and the database
@@ -49,7 +50,7 @@ export class PriceService {
     const ttl = Number(process.env.REDIS_TTL) || 60;
     //store data in cache with TTL because price data can change frequently
     await this.redis.set(cacheKey, JSON.stringify(data), ttl);
-    
+    this.gateway.sendPriceUpdate(symbol, parseFloat(data.price));
     const priceLog = this.repo.create({
       symbol: data.symbol,
       price: data.price,
