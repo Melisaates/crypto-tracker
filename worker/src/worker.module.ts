@@ -25,6 +25,7 @@ import { PricesGateway } from "./prices.gateway";
         database: process.env.DB_NAME || 'cryptodb',
         entities: [PriceLog],
         synchronize: false,
+        migrationsRun: true,
     })
 
 ],
