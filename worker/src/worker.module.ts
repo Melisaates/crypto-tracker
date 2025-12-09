@@ -5,6 +5,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { WorkerService } from "./worker.service";
 import { RedisService } from "./redis.service";
 import { PriceLog } from "./price.entity";
+import { PricesGateway } from "./prices.gateway";
 
 
 
@@ -27,7 +28,7 @@ import { PriceLog } from "./price.entity";
     })
 
 ],
-    providers: [WorkerService, RedisService],
+    providers: [WorkerService, RedisService, PricesGateway],
 
 
 })

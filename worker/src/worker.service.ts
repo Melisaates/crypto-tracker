@@ -4,11 +4,13 @@ import { PriceLog } from "./price.entity";
 import { Repository } from "typeorm";
 import { RedisService } from "./redis.service";
 import axios from "axios";
+import { PricesGateway } from "./prices.gateway";
 import { Cron } from "@nestjs/schedule";
 
 export class WorkerService {
 
     private readonly logger = new Logger(WorkerService.name);
+    private readonly pricesGateway: PricesGateway;
     // symbols to fetch prices for
     private  symbols: string[];
     private intervalSeconds :number; // Fetch prices every 60 seconds
@@ -43,6 +45,7 @@ export class WorkerService {
             });
             await this.repo.save(priceLog);
             this.logger.log(`Saved price for ${symbol}: ${price}`);
+            this.pricesGateway.sendPriceUpdate(symbol, price);
             
 
         } catch (error) {

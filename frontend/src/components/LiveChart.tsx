@@ -29,10 +29,10 @@ export default function LiveChart({ symbol }: { symbol: string }) {
 
   return (
     <LineChart width={600} height={300} data={data}>
-      <XAxis dataKey="time" />
-      <YAxis />
+      <XAxis dataKey="time" stroke='pink'/>
+      <YAxis stroke='pink' />
       <Tooltip />
-      <Line type="monotone" dataKey="price" />
+      <Line type="monotone" dataKey="price" stroke='pink' />
     </LineChart>
   );
 }
