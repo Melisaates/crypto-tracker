@@ -15,8 +15,9 @@ export default function LiveChart({ symbol }: { symbol: string }) {
       }
     };
 
-    socket.on('priceUpdate', handler);
-
+    socket.on("price", (data) => {
+      console.log("update", data);
+    })
     return () => {
       socket.off('priceUpdate', handler);
     };
