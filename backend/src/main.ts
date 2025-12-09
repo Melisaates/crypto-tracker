@@ -6,6 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || '3000';
 
+  app.useWebSocketAdapter(new (require('@nestjs/platform-socket.io').IoAdapter)(app));
+
 
   app.enableCors({
   origin: "*",

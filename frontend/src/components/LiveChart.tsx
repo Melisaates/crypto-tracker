@@ -4,28 +4,28 @@ import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
 
 export default function LiveChart({ symbol }: { symbol: string }) {
   const [data, setData] = useState<{ time: string; price: number }[]>([]);
+useEffect(() => {
+  const handler = (update: { symbol: string; price: number }) => {
+    console.log("PRICE EVENT RECEIVED:", update);
 
-  useEffect(() => {
-    const handler = (update: { symbol: string; price: number }) => {
-  console.log("PRICE EVENT RECEIVED:", update);
-    
-      if (update.symbol !== symbol) return;
+    if (update.symbol !== symbol) return;
 
-      setData(prev => [
-        ...prev.slice(-20),
-        { 
-          time: new Date().toLocaleTimeString(), 
-          price: update.price 
-        }
-      ]);
-    };
+    setData(prev => [
+      ...prev.slice(-20),
+      {
+        time: new Date().toLocaleTimeString(),
+        price: Number(update.price)
+      }
+    ]);
+  };
 
-    socket.on("priceUpdate", handler);
+  socket.on("priceUpdate", handler);
 
-    return () => {
-      socket.off("priceUpdate", handler);
-    };
-  }, [symbol]);
+  return () => {
+    socket.off("priceUpdate", handler);
+  };
+}, [symbol]);
+
 
   return (
     <LineChart width={600} height={300} data={data}>
