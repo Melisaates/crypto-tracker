@@ -20,10 +20,10 @@ export default function LiveChart({ symbol }: { symbol: string }) {
       ]);
     };
 
-    socket.on("price", handler);
+    socket.on("priceUpdate", handler);
 
     return () => {
-      socket.off("price", handler);
+      socket.off("priceUpdate", handler);
     };
   }, [symbol]);
 

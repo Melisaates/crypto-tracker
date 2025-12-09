@@ -52,7 +52,7 @@ export class PriceService {
     const ttl = Number(process.env.REDIS_TTL) || 60;
     //store data in cache with TTL because price data can change frequently
     await this.redis.set(cacheKey, JSON.stringify(data), ttl);
-    this.gateway.sendPriceUpdate(symbol, parseFloat(data.price));
+    this.gateway.sendPriceUpdate(symbol, data.price);
     const priceLog = this.repo.create({
       symbol: data.symbol,
       price: data.price,

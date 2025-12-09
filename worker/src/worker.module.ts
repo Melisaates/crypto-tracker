@@ -23,7 +23,7 @@ import { PriceLog } from "./price.entity";
         password: process.env.DB_PASSWORD || 'postgres',
         database: process.env.DB_NAME || 'cryptodb',
         entities: [PriceLog],
-        synchronize: true,
+        synchronize: false,
     })
 
 ],

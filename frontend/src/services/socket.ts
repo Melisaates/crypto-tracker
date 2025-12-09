@@ -1,12 +1,14 @@
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client'
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
-console.log("FRONTEND: connecting to BACKEND_URL =", BACKEND_URL);
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
 
-export const socket = io(import.meta.env.VITE_BACKEND_URL!, {
+export const socket = io(BACKEND_URL, {
   transports: ['websocket'],
-  autoConnect: true,
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000,
 });
+
 
 // debug handlers
 socket.on("connect", () => console.log("SOCKET CONNECTED", socket.id));
