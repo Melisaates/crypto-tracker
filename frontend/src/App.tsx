@@ -1,34 +1,10 @@
-import { useEffect, useState } from 'react';
-import { socket } from './services/socket';
-import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
+// Make sure the path is correct and the file exists
+import LiveChart from './components/LiveChart';
 
-export default function LiveChart({ symbol }: { symbol: string }) {
-  const [data, setData] = useState<{ time: string; price: number }[]>([]);
-
-  useEffect(() => {
-    const handler = (update: { symbol: string; price: number }) => {
-      if (update.symbol === symbol) {
-        setData(prev => [
-          ...prev.slice(-20), // sadece son 20 veri
-          { time: new Date().toLocaleTimeString(), price: update.price },
-        ]);
-      }
-    };
-
-    socket.on("price", (data) => {
-      console.log("update", data);
-    })
-    return () => {
-      socket.off('priceUpdate', handler);
-    };
-  }, [symbol]);
-
+export function App() {
   return (
-    <LineChart width={600} height={300} data={data}>
-      <XAxis dataKey="time" />
-      <YAxis />
-      <Tooltip />
-      <Line type="monotone" dataKey="price" stroke="#8884d8" />
-    </LineChart>
+    <>
+      <LiveChart symbol="BTCUSDT"/>
+    </>
   );
 }

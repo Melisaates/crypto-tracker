@@ -2,26 +2,26 @@ import { WebSocketGateway, WebSocketServer, OnGatewayInit } from '@nestjs/websoc
 import { Server } from 'socket.io';
 import { Injectable } from '@nestjs/common';
 import { transports } from 'engine.io-client';
+import { OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
 
-@WebSocketGateway(
-    {
-        cors: true,
-        origin: '*', methods: ['GET', 'POST'],
-        transports: ['websocket']
+@WebSocketGateway({ cors: { origin: "*" } })
+export class PricesGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+  @WebSocketServer() server: Server;
 
-    }
+  afterInit() {
+    console.log('WebSocket server initialized');
+  }
 
+  handleConnection(client: any) {
+    console.log('Client connected', client.id);
+  }
 
-)
-export class PricesGateway implements OnGatewayInit {
-    @WebSocketServer()
-    server: Server;
+  handleDisconnect(client: any) {
+    console.log('Client disconnected', client.id);
+  }
 
-    afterInit() {
-        console.log('WebSocket server initialized');
-    }
-
-    sendPriceUpdate(symbol: string, price: number) {
-        this.server.emit('price', { symbol, price });
-    }
+  sendPriceUpdate(symbol: string, price: number) {
+    console.log('Gateway emitting price', { symbol, price });
+    this.server.emit('price', { symbol, price });
+  }
 }
