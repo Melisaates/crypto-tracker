@@ -1,51 +1,54 @@
 # 🚀 Crypto Price Tracker
 
-**Crypto Price Tracker**, Binance API üzerinden kripto para fiyatlarını çeken, Redis cache ve PostgreSQL veritabanına kaydeden bir mikroservis uygulamasıdır. Docker Compose ile kolayca çalıştırılabilir ve frontend tarafında WebSocket ile canlı fiyatlar ve grafikler sunar.
+**Crypto Price Tracker** is a microservice application that fetches cryptocurrency prices from the Binance API, caches them with Redis and stores them in PostgreSQL database. It can be easily run with Docker Compose and provides live prices and charts on the frontend via WebSocket.
+.
 
 ![Live Chart](./screenshot.png)
 
 ---
 
-## 1️⃣ Projenin Amacı
+## 1️⃣ Project Purpose
 
-- Binance API’den kripto fiyatlarını çekmek  
-- Redis ile cacheleyerek hızlı erişim sağlamak  
-- PostgreSQL’e fiyat geçmişini loglamak  
-- Docker Compose ile tüm servisleri ayağa kaldırmak  
-- Scheduler container ile fiyatları belirli aralıklarla çekmek  
-- Frontend’de WebSocket ile canlı fiyat ve grafik göstermek  
+- Fetch crypto prices from Binance API
+- Provide fast access by caching with Redis
+- Log price history to PostgreSQL
+- Launch all services with Docker Compose
+- Fetch prices at specific intervals with scheduler container
+- Display live prices and charts on frontend via WebSocket
 
 ---
 
-## 2️⃣ Sistem Mimarisi ve Servisler
+## 2️⃣ System Architecture and Services
 
 ### 2.1 Backend API
-- Node.js & NestJS tabanlı  
-- Fiyatları çekip PostgreSQL ve Redis’e kaydeder  
-- `/prices` endpoint ile son fiyatları JSON olarak döner  
-- WebSocket ile frontend’e canlı veri gönderir  
+- Node.js & NestJS based
+- Fetches prices and stores them in PostgreSQL and Redis
+- Returns latest prices as JSON via `/prices` endpoint
+- Sends live data to frontend via WebSocket
+
 
 ### 2.2 Database
 - PostgreSQL (Docker container)  
-- `price_logs` tablosu:  
+- `price_logs` table:  
   | Kolon | Tip | Açıklama |
   |-------|-----|----------|
-  | id | SERIAL PRIMARY KEY | Tekil ID |
-  | symbol | VARCHAR | Kripto para sembolü (BTCUSDT) |
-  | price | DECIMAL | Fiyat |
-  | timestamp | TIMESTAMP | Veri çekilme zamanı |
+  | id | SERIAL PRIMARY KEY | Unique ID |
+  | symbol | VARCHAR | Crypto Symbol (BTCUSDT) |
+  | price | DECIMAL | Price |
+  | timestamp | TIMESTAMP | Data fetch time |
 
 ### 2.3 Cache
-- Redis (Docker container)  
-- Son fiyatların hızlı erişimi için kullanılır  
+- Redis (Docker container)
+- Used for fast access to latest prices
+
 
 ### 2.4 Scheduler / Worker
-- Fiyatları belirli aralıklarla çekmek için ayrı container  
-- Cron-job benzeri işleyişle otomatik güncelleme sağlar  
+- Separate container to fetch prices at specific intervals
+- Provides automatic updates with cron-job like functionality
 
 ---
 
-## 3️⃣ Docker Compose Yapısı
+## 3️⃣ Docker Compose Structure
 
 ```yaml
 version: "3.9"
@@ -89,7 +92,7 @@ services:
 volumes:
   pgdata:
 ```
-## 4️⃣ .env Örnek
+## 4️⃣ .env Example
 
 **backend/.env & worker/.env**
 
@@ -101,30 +104,30 @@ BINANCE_API_URL="https://api.binance.com/api/v3/ticker/price"
 SCHEDULE_INTERVAL=10   # saniye cinsinden
 ```
 
-## 5️⃣ Kurulum & Çalıştırma
+## 5️⃣ Installation & Running
 
-### Repo’yu klonlayın:
+### Clone the repo:
 ```bash
 git clone <repo-url>
 cd <repo-folder>
 ```
 
-Docker Compose ile servisleri ayağa kaldırın:
+Launch services with Docker Compose:
 ```bash
 docker-compose up --build
 ```
 
-Backend API’ye erişim:
+Access Backend API:
 ```bash
 http://localhost:4000/prices
 ```
 
-Frontend’i açın ve canlı fiyatları, live chart’ı görüntüleyin:
+Open frontend to view live prices and live chart:
 ```
 http://localhost:4173
 ```
 
-## 6️⃣ Teknolojiler
+## 6️⃣ Technologies
 
 Backend: Node.js, NestJS
 
@@ -138,15 +141,12 @@ Frontend: WebSocket, Live Chart
 
 Containerization: Docker, Docker Compose
 
-## 7️⃣ Özellikler
-
-- Fiyatların belirli aralıklarla otomatik güncellenmesi
-
-- Redis cache ile hızlı erişim
-
-- WebSocket ile frontend’e canlı veri akışı
-
-- Live chart ile grafik gösterimi
-
-
-⚡ Not: ![Live Chart](./screenshot.png) kısmındaki görseli repo köküne screenshot.png olarak kaydedersen Markdown içinde gösterilecektir.
+## 7️⃣ Features
+- Automatic price updates at specific intervals
+  
+- Fast access with Redis cache
+  
+- Live data stream to frontend via WebSocket
+  
+- Chart display with live chart
+  
