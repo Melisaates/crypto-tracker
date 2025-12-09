@@ -12,8 +12,6 @@ import { transports } from 'engine.io-client';
     }
 
 
-
-
 )
 export class PricesGateway implements OnGatewayInit {
     @WebSocketServer()
