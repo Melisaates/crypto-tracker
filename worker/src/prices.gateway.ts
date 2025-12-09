@@ -20,6 +20,6 @@ export class PricesGateway implements OnGatewayInit, OnGatewayConnection, OnGate
 
   sendPriceUpdate(symbol: string, price: number) {
     console.log('Gateway emitting price', { symbol, price });
-    this.server.emit('price', { symbol, price });
+    this.server.emit('priceUpdate', { symbol, price });
   }
 }

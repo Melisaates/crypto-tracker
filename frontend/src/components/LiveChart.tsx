@@ -4,9 +4,12 @@ import { LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
 
 export default function LiveChart({ symbol }: { symbol: string }) {
   const [data, setData] = useState<{ time: string; price: number }[]>([]);
+  console.log("LiveChart rendered with symbol:", symbol);
 useEffect(() => {
   const handler = (update: { symbol: string; price: number }) => {
-    console.log("PRICE EVENT RECEIVED:", update);
+    console.log("PRICE EVENT RECEIVED: symbol : ", update.symbol);
+    console.log("PRICE EVENT RECEIVED: price : ", update.price);
+
 
     if (update.symbol !== symbol) return;
 

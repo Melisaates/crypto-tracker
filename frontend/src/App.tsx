@@ -1,10 +1,13 @@
-// Make sure the path is correct and the file exists
-import LiveChart from './components/LiveChart';
+import LiveChart from './components/LiveChart'
 
-export function App() {
+function App() {
   return (
-    <>
-      <LiveChart symbol="BTCUSDT"/>
-    </>
-  );
+    <div>
+      <h2 style={{color:"white"}}>BTC/USDT Live Price</h2>
+      <LiveChart symbol="BTCUSDT" />
+    </div>
+  )
 }
+
+export default App
+export { App }
