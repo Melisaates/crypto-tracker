@@ -7,7 +7,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PriceLog } from './entities/price.entity';
 import { Repository } from 'typeorm';
 import axios from 'axios';
-import { PricesGateway } from './prices.gateway';
 
 @Injectable()
 export class PriceService {
@@ -20,7 +19,6 @@ export class PriceService {
   //the repository is used to perform CRUD operations on PriceLog entities
   constructor(
     private readonly redis: RedisService,
-    private readonly gateway: PricesGateway,
     // repository pattern is used to abstract the data layer
     // it provides a way to manage and query entities without exposing the underlying database details
     // InjectRepository is a decorator from TypeORM that allows us to inject a repository for a specific entity
@@ -40,7 +38,6 @@ export class PriceService {
       //log cache hit 
       this.logger.log(`Cache hit for ${symbol}`);
       //return cached data if found
-      this.gateway.sendPriceUpdate(symbol, JSON.parse(cached).price);
       return JSON.parse(cached);
     }
 
@@ -52,7 +49,6 @@ export class PriceService {
     const ttl = Number(process.env.REDIS_TTL) || 60;
     //store data in cache with TTL because price data can change frequently
     await this.redis.set(cacheKey, JSON.stringify(data), ttl);
-    this.gateway.sendPriceUpdate(symbol, data.price);
     const priceLog = this.repo.create({
       symbol: data.symbol,
       price: data.price,
